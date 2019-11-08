@@ -1,0 +1,26 @@
+{
+  "name": "cvutplus",
+  "author": "Sergei ZH <sergey95aeses@gmail.com> (https://ench.me/quentincaffeino)",
+  "version": "1.0.0",
+  "main": "dist/cvutplus.cjs.js",
+  "module": "dist/cvutplus.esm.js",
+  "browser": "dist/cvutplus.umd.js",
+  "devDependencies": {
+    "rollup": "^1.20.0",
+    "rollup-plugin-commonjs": "^10.0.0",
+    "rollup-plugin-license": "^0.12.1",
+    "rollup-plugin-node-resolve": "^5.1.0"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "node test/test.js",
+    "pretest": "npm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "eventemitter3": "^4.0.0"
+  }
+}
