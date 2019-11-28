@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         cvutplus
-// @version      0.1.0-1574976974846
+// @version      0.1.1-1574977096054
 // @author       Sergei ZH <sergey95aeses@gmail.com> (https://ench.me/quentincaffeino)
 // @homepage     https://github.com/QuentinCaffeino/cvutplus
 // @downloadURL  https://raw.githubusercontent.com/QuentinCaffeino/cvutplus/master/dist/cvutplus.user.js

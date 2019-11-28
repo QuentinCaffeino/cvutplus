@@ -1,7 +1,7 @@
 {
   "name": "cvutplus",
   "author": "Sergei ZH <sergey95aeses@gmail.com> (https://ench.me/quentincaffeino)",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "browser": "dist/cvutplus.user.js",
   "devDependencies": {
     "rollup": "^1.20.0",
