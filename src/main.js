@@ -1,4 +1,4 @@
-import { AssignmentFormElement } from './Assignment'
+import { AssignmentFormElement } from './Components/Assignment/AssignmentFormElement'
 
 
 AssignmentFormElement.initializeOn(document)
