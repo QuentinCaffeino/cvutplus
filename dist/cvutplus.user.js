@@ -1,10 +1,12 @@
 // ==UserScript==
 // @name         cvutplus
-// @version      0.1
+// @version      0.1.1-1574977096054
 // @author       Sergei ZH <sergey95aeses@gmail.com> (https://ench.me/quentincaffeino)
-// @require      https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.js
-// @require      https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.16.0/polyfill.js
-// @match        https://cw.felk.cvut.cz/brute/student/course/*/*
+// @homepage     https://github.com/QuentinCaffeino/cvutplus
+// @downloadURL  https://raw.githubusercontent.com/QuentinCaffeino/cvutplus/master/dist/cvutplus.user.js
+// @updateURL    https://raw.githubusercontent.com/QuentinCaffeino/cvutplus/master/dist/cvutplus.user.js
+// @supportURL   https://github.com/QuentinCaffeino/cvutplus/issues/new
+// @match        https://cw.felk.cvut.cz/brute/*
 // ==/UserScript==
 
 (function (factory) {
@@ -354,13 +356,28 @@
 	}
 	});
 
+	class Assignment {
+
+		constructor({ score }) {
+			this._score = score;
+		}
+
+
+		get score() {
+			return this._score
+		}
+
+	}
+
 	class Score {
+
 		constructor({ current = 0, ae = 0, min = 0, max = 0 }) {
 			this._current = parseFloat(current);
 			this._ae = parseFloat(ae);
 			this._min = parseFloat(min);
 			this._max = parseFloat(max);
 		}
+
 
 		get current() {
 			return this._current
@@ -381,96 +398,92 @@
 		get shouldWarn() {
 			return this.current >= this.min
 		}
+
 	}
 
 	class ScoreElement {
+
 		/**
 		 * @param {AssignmentFormElement} assignmentFormElement
 		 * @returns {Score}
 		 */
-		static initializeOn(assignmentFormElement) {
-			let current = 0;
-			let ae = 0;
-			let min = 0;
-			let max = 0;
+	  static initializeOn(assignmentFormElement) {
+	    let current = 0;
+	    let ae = 0;
+	    let min = 0;
+	    let max = 0;
 
-			const scoreLabels = [...assignmentFormElement.labels].filter(el => el.innerText === 'Score');
-			const scoreLabel = scoreLabels.length ? scoreLabels[0] : null;
-			if (scoreLabel) {
-				const scoreFormGroup = scoreLabel.parentElement;
-				if (scoreFormGroup) {
-					const scoreWrapper = scoreFormGroup.querySelector('.col-sm-9');
-					if (scoreWrapper) {
-						[current, ae, min, max] = scoreWrapper.innerText.match(new RegExp('\\d+', 'gm'));
-					}
-				}
-			}
+	    const scoreLabels = [...assignmentFormElement.labels].filter(el => el.innerText === 'Score');
+	    const scoreLabel = scoreLabels.length ? scoreLabels[0] : null;
+	    if (scoreLabel) {
+	      const scoreFormGroup = scoreLabel.parentElement;
+	      if (scoreFormGroup) {
+	        const scoreWrapper = scoreFormGroup.querySelector('.col-sm-9');
+	        if (scoreWrapper) {
+	          [current, ae, min, max] = scoreWrapper.innerText.match(new RegExp('\\d+', 'gm'));
+	        }
+	      }
+	    }
 
-			return new Score({ current, ae, min, max })
-		}
-	}
+	    return new Score({ current, ae, min, max })
+	  }
 
-	class Assignment {
-		constructor({ score }) {
-			this._score = score;
-		}
-
-		get score() {
-			return this._score
-		}
 	}
 
 	class AssignmentFormElement extends eventemitter3 {
-		constructor({ element }) {
-			super();
-			this._element = element;
-			this.initializeSubmitButton();
-		}
 
-		get element() {
-			return this._element
-		}
+	  constructor({ element }) {
+	    super();
+	    this._element = element;
+	    this.initializeSubmitButton();
+	  }
 
-		get labels() {
-			return this.element.querySelectorAll('.control-label')
-		}
 
-		initializeSubmitButton() {
-			const originalSubmitButton = AssignmentFormElement.getSubmitButton(this);
-			const clonedElement = originalSubmitButton.cloneNode(true);
-			originalSubmitButton.parentElement.replaceChild(clonedElement, originalSubmitButton);
-			if (clonedElement) {
-				clonedElement.addEventListener('click', event => {
-					event.preventDefault();
-					this.emit('submit', doSubmit => doSubmit && originalSubmitButton.click(), event);
-				});
-			}
-		}
+	  get element() {
+	    return this._element
+	  }
+
+	  get labels() {
+	    return this.element.querySelectorAll('.control-label')
+	  }
+
+	  initializeSubmitButton() {
+	    const originalSubmitButton = AssignmentFormElement.getSubmitButton(this);
+	    const clonedElement = originalSubmitButton.cloneNode(true);
+	    originalSubmitButton.parentElement.replaceChild(clonedElement, originalSubmitButton);
+	    if (clonedElement) {
+	      clonedElement.addEventListener('click', event => {
+	        event.preventDefault();
+	        this.emit('submit', doSubmit => doSubmit && originalSubmitButton.click(), event);
+	      });
+	    }
+	  }
 
 		/**
 		 * @param {AssignmentFormElement} assignmentFormElement
 		 */
-		static getSubmitButton(assignmentFormElement) {
-			return assignmentFormElement.element.querySelector('a.btn.btn-default.btn-secondary.fileinput-upload.fileinput-upload-button')
-		}
+	  static getSubmitButton(assignmentFormElement) {
+	    return assignmentFormElement.element.querySelector('a.btn.btn-default.btn-secondary.fileinput-upload.fileinput-upload-button')
+	  }
 
 		/**
 		 * @param {Document|Element|Node} context
 		 * @returns {Assignment}
 		 */
-		static initializeOn(context) {
-			const element = context.querySelector('#assignment_tabsContent > .tab-pane.active > form, .panel > .panel-collapse.collapse.in form');
-			const assignmentFormElement = new this({ element });
-			const score = ScoreElement.initializeOn(assignmentFormElement);
-			assignmentFormElement.on('submit', doSubmit => {
-				if (score.shouldWarn) {
-					doSubmit(window.confirm('You sure you want to submit?'));
-				} else {
-					doSubmit(true);
-				}
-			});
-			return new Assignment({ score })
-		}
+	  static initializeOn(context) {
+	    const element = context.querySelector('#assignment_tabsContent > .tab-pane.active > form, .panel > .panel-collapse.collapse.in form');
+	    const assignmentFormElement = new this({ element });
+	    const score = ScoreElement.initializeOn(assignmentFormElement);
+	    assignmentFormElement.on('submit', doSubmit => {
+	      if (score.shouldWarn) {
+	        doSubmit(window.confirm('You sure you want to submit?'));
+	      } else {
+	        doSubmit(true);
+	      }
+	    });
+	    return new Assignment({ score })
+	  }
+
 	}
 
 	AssignmentFormElement.initializeOn(document);
