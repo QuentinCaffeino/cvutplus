@@ -1,10 +1,12 @@
 // ==UserScript==
 // @name         cvutplus
-// @version      0.1
+// @version      0.1.0-1574973523202
 // @author       Sergei ZH <sergey95aeses@gmail.com> (https://ench.me/quentincaffeino)
-// @require      https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.js
-// @require      https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.16.0/polyfill.js
-// @match        https://cw.felk.cvut.cz/brute/student/course/*/*
+// @homepage     https://github.com/QuentinCaffeino/cvutplus
+// @downloadURL  https://raw.githubusercontent.com/QuentinCaffeino/cvutplus/master/dist/cvutplus.umd.js
+// @updateURL    https://raw.githubusercontent.com/QuentinCaffeino/cvutplus/master/dist/cvutplus.umd.js
+// @supportURL   https://github.com/QuentinCaffeino/cvutplus/issues/new
+// @match        https://cw.felk.cvut.cz/brute/*
 // ==/UserScript==
 
 (function (factory) {
