@@ -23,3 +23,5 @@ Userscript to improve your user experience with CVUT systems.
   - [ ] Components (Upcoming deadlines, Course, Assignment)
   - [ ] Controllers to run specific components on specific pages
   - [ ] Add opacity to already completed assignments in lists
+  - [ ] Add 'Add to calendar' button for assigments
+
