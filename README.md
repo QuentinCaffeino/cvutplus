@@ -18,10 +18,11 @@ Userscript to improve your user experience with CVUT systems.
 
 ## Todo:
 
+- General:
+  - [ ] Components (Upcoming deadlines, Course, Assignment, etc.)
+  - [ ] Controllers to run specific components on specific pages
+
 - Brute:
   - [ ] Sort assignments by date
-  - [ ] Components (Upcoming deadlines, Course, Assignment)
-  - [ ] Controllers to run specific components on specific pages
   - [ ] Add opacity to already completed assignments in lists
   - [ ] Add 'Add to calendar' button for assigments
-
